@@ -1,0 +1,18 @@
+.{
+    .name = "libelf",
+    .version = "0.190.0",
+    .dependencies = .{
+        .elfutils = .{
+            // once TLS1.2 is supported, switch to https://sourceware.org/elfutils/ftp/ and delete config.h.in
+            .url = "https://github.com/sailfishos-mirror/elfutils/archive/refs/tags/elfutils-0.190.tar.gz",
+            .hash = "12201b3ec09122fa4d52d17c5d23431ef722eb481f35015876dd428d5c26ffdb7171",
+        },
+    },
+    .paths = .{
+        "LICENSE",
+        "README.md",
+        "build.zig",
+        "build.zig.zon",
+        "config.h.in",
+    },
+}
