@@ -8,7 +8,7 @@ packaged for [Zig](https://ziglang.org/).
 First, update your `build.zig.zon`:
 
 ```
-zig fetch --save https://github.com/tw4452852/elfutils/archive/refs/tags/1.3.0.tar.gz
+zig fetch --save https://github.com/tw4452852/elfutils/archive/refs/tags/0.190.0.tar.gz
 ```
 
 Next, add this snippet to your `build.zig` script:
@@ -21,8 +21,8 @@ const elfutils_dep = b.dependency("elfutils", .{
 your_compilation.linkLibrary(elfutils_dep.artifact("<lib_name>"));
 ```
 
-Current supported libs:
+`lib_name` could be:
 
-[x] libelf
+- [x] elf
 
-This will provide the specified artifact as a static library to `your_compilation`.
+This will provide the specified one as a static library to `your_compilation`.

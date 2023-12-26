@@ -1,7 +1,8 @@
 const std = @import("std");
 
 pub fn build(b: *std.Build) void {
-    const upstream = b.dependency("elfutils", .{});
+    const target = b.standardTargetOptions(.{});
+    const optimize = b.standardOptimizeOption(.{});
 
     const config_header = b.addConfigHeader(.{ .style = .{ .autoconf = .{ .path = "config.h.in" } } }, .{
         .CHECK_UNDEFINED = 0,
@@ -17,10 +18,10 @@ pub fn build(b: *std.Build) void {
         .HAVE_DECL_MEMPCPY = 1,
         .HAVE_DECL_MEMRCHR = 1,
         .HAVE_DECL_POWEROF2 = 1,
-        .HAVE_DECL_RAWMEMCHR = 1,
+        .HAVE_DECL_RAWMEMCHR = 0,
         .HAVE_DECL_REALLOCARRAY = 1,
         .HAVE_DECL_STRERROR_R = 1,
-        .HAVE_ERROR_H = 1,
+        .HAVE_ERROR_H = null,
         .HAVE_ERR_H = 1,
         .HAVE_EXECINFO_H = 1,
         .HAVE_FALLTHROUGH = 1,
@@ -57,23 +58,33 @@ pub fn build(b: *std.Build) void {
         .SIZEOF_LONG = 8,
         .STDC_HEADERS = 1,
         .STRERROR_R_CHAR_P = 1,
-        .USE_BZLIB = 1,
+        .USE_BZLIB = 0,
         .USE_DEMANGLE = 1,
         .USE_LOCKS = null,
         .USE_LZMA = 1,
         .USE_ZLIB = 1,
-        .USE_ZSTD = 1,
-        .USE_ZSTD_COMPRESS = 1,
+        .USE_ZSTD = null,
+        .USE_ZSTD_COMPRESS = null,
         .VERSION = "0.190",
         .YYTEXT_POINTER = 1,
         ._FILE_OFFSET_BITS = null,
         ._LARGE_FILES = null,
     });
 
+    generate_libelf_artifact(b, target, optimize, config_header);
+}
+
+fn generate_libelf_artifact(b: *std.Build, target: std.zig.CrossTarget, optimize: std.builtin.Mode, config_header: *std.Build.Step.ConfigHeader) void {
+    const upstream = b.dependency("elfutils", .{});
+    const zlib = b.dependency("zlib", .{
+        .target = target,
+        .optimize = optimize,
+    }).artifact("z");
+
     const libelf = b.addStaticLibrary(.{
         .name = "elf",
-        .target = b.standardTargetOptions(.{}),
-        .optimize = b.standardOptimizeOption(.{}),
+        .target = target,
+        .optimize = optimize,
     });
 
     libelf.addConfigHeader(config_header);
@@ -211,6 +222,19 @@ pub fn build(b: *std.Build) void {
         .dependency = upstream,
         .sub_path = "libelf",
     } });
+    libelf.linkLibrary(zlib);
+
+    libelf.installHeadersDirectoryOptions(.{
+        .source_dir = upstream.path("libelf"),
+        .install_dir = .header,
+        .install_subdir = "",
+        .include_extensions = &.{
+            "libelf.h",
+            "gelf.h",
+            "nlist.h",
+            "elf.h",
+        },
+    });
 
     b.installArtifact(libelf);
 }
