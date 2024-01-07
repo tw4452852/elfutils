@@ -74,7 +74,7 @@ pub fn build(b: *std.Build) void {
     generate_libelf_artifact(b, target, optimize, config_header);
 }
 
-fn generate_libelf_artifact(b: *std.Build, target: std.zig.CrossTarget, optimize: std.builtin.Mode, config_header: *std.Build.Step.ConfigHeader) void {
+fn generate_libelf_artifact(b: *std.Build, target: std.Build.ResolvedTarget, optimize: std.builtin.Mode, config_header: *std.Build.Step.ConfigHeader) void {
     const upstream = b.dependency("elfutils", .{});
     const zlib = b.dependency("zlib", .{
         .target = target,
