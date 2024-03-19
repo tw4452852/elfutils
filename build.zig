@@ -90,7 +90,7 @@ fn generate_libelf_artifact(b: *std.Build, target: std.Build.ResolvedTarget, opt
     libelf.addConfigHeader(config_header);
     libelf.linkLibC();
     libelf.addCSourceFiles(.{
-        .dependency = upstream,
+        .root = upstream.path(""),
         .files = &.{
             "libelf/elf_version.c",
             "libelf/elf_hash.c",
