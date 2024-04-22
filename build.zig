@@ -224,10 +224,7 @@ fn generate_libelf_artifact(b: *std.Build, target: std.Build.ResolvedTarget, opt
     } });
     libelf.linkLibrary(zlib);
 
-    libelf.installHeadersDirectoryOptions(.{
-        .source_dir = upstream.path("libelf"),
-        .install_dir = .header,
-        .install_subdir = "",
+    libelf.installHeadersDirectory(upstream.path("libelf"), "", .{
         .include_extensions = &.{
             "libelf.h",
             "gelf.h",
