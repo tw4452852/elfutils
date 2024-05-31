@@ -1,6 +1,6 @@
 .{
     .name = "libelf",
-    .version = "0.190.0-3",
+    .version = "0.190.0-4",
     .dependencies = .{
         .elfutils = .{
             // once TLS1.2 is supported, switch to https://sourceware.org/elfutils/ftp/ and delete config.h.in

@@ -4,7 +4,7 @@ pub fn build(b: *std.Build) void {
     const target = b.standardTargetOptions(.{});
     const optimize = b.standardOptimizeOption(.{});
 
-    const config_header = b.addConfigHeader(.{ .style = .{ .autoconf = .{ .path = "config.h.in" } } }, .{
+    const config_header = b.addConfigHeader(.{ .style = .{ .autoconf = b.path("config.h.in") } }, .{
         .CHECK_UNDEFINED = 0,
         .DEFAULT_AR_DETERMINISTIC = false,
         .DUMMY_LIBDEBUGINFOD = 1,
