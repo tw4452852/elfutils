@@ -1,5 +1,5 @@
 .{
-    .name = "libelf",
+    .name = .libelf,
     .version = "0.190.0-4",
     .dependencies = .{
         .elfutils = .{
@@ -19,4 +19,5 @@
         "build.zig.zon",
         "config.h.in",
     },
+    .fingerprint = 0xe87cad3bc99fe3bc,
 }
