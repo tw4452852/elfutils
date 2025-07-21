@@ -1,6 +1,6 @@
 .{
     .name = .libelf,
-    .version = "0.190.0-6",
+    .version = "0.193.0",
     .dependencies = .{
         .upstream = .{
             .url = "https://github.com/arachsys/libelf/archive/refs/tags/v0.193.tar.gz",

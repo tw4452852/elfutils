@@ -8,7 +8,7 @@ packaged for [Zig](https://ziglang.org/).
 First, update your `build.zig.zon`:
 
 ```
-zig fetch --save https://github.com/tw4452852/libelf_zig/archive/refs/tags/0.190.0.tar.gz
+zig fetch --save https://github.com/tw4452852/libelf_zig/archive/refs/tags/0.193.0.tar.gz
 ```
 
 Next, add this snippet to your `build.zig` script:
